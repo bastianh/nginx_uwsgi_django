@@ -34,6 +34,13 @@ RUN echo "files = /base/config/supervisord/*.conf" >> /etc/supervisor/supervisor
 RUN rm /etc/nginx/sites-enabled/default
 RUN ln -s /base/config/nginx/vhost.conf /etc/nginx/sites-enabled/
 
+# use deploy user to run services and stuff
+RUN mkdir -p /home/deploy
+RUN groupadd -g 1006 deploy
+RUN useradd  -g 1006 -u 1006 deploy
+RUN chown -R deploy.deploy /home/deploy
+RUN chown -R deploy.deploy /base
+
 EXPOSE 80
 
 CMD ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
