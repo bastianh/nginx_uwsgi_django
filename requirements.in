@@ -1,4 +1,17 @@
 # use 'pip-tools' to compile this file
 
-django
 uwsgi
+
+django
+django-redis
+
+# some common modules
+redis
+hiredis
+psycopg2
+celery
+pyyaml
+
+# some that take long to compile
+pillow
+libsass

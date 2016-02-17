@@ -5,22 +5,27 @@ MAINTAINER dafire
 RUN apt-get update
 
 # install additional sources
-RUN apt-get install -y software-properties-common build-essential
+RUN apt-get install -y software-properties-common build-essential curl
 RUN add-apt-repository -y ppa:nginx/development
+RUN add-apt-repository -y ppa:chris-lea/redis-server
 
-RUN apt-get update
+RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
 
-#install python3.5 and curl to get pip
-RUN apt-get install -y python3.5 python3.5-dev curl nginx supervisor
+#install python3.5, nodejs and curl to get pip
+RUN apt-get install -y python3.5 python3.5-dev curl nginx redis-server supervisor nodejs git libpq-dev libjpeg-dev
 
 #install pip for python 3.5
 RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python3.5
 
-ADD . /base
+#install some website tools
+RUN npm i -g uglifyjs coffee-script bower
 
-RUN pip install -r /base/requirements.txt
+ADD requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
+RUN rm /tmp/requirements.txt
 
-RUN rm /base/requirements.txt /base/requirements.in /base/Dockerfile
+ADD config /base/config
+ADD demo /base/demo
 
 # setup all the configfiles
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
