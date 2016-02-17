@@ -1,0 +1,4 @@
+# use 'pip-tools' to compile this file
+
+django
+uwsgi
