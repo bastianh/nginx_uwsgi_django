@@ -7,12 +7,11 @@ RUN apt-get update
 # install additional sources
 RUN apt-get install -y software-properties-common build-essential curl
 RUN add-apt-repository -y ppa:nginx/development
-RUN add-apt-repository -y ppa:chris-lea/redis-server
 
 RUN curl -sL https://deb.nodesource.com/setup_5.x | bash -
 
 #install python3.5, nodejs and curl to get pip
-RUN apt-get install -y python3.5 python3.5-dev curl nginx redis-server supervisor nodejs git libpq-dev libjpeg-dev
+RUN apt-get install -y python3.5 python3.5-dev curl nginx supervisor nodejs git libpq-dev libjpeg-dev postgresql-client
 
 #install pip for python 3.5
 RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python3.5
